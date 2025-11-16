@@ -4,6 +4,7 @@ import nunjucks from "nunjucks";
 import path from "path";
 import * as dotenv from 'dotenv';
 import Post from "./posts.model";
+import PostRepository from "./PostRepository";
 
 dotenv.config();
 
@@ -19,13 +20,13 @@ nunjucks.configure(viewsPath, {
 });
 
 app.get("/", (req: Request, res: Response) => {
-   const posts = Post.getAllPosts();
+   const posts = PostRepository.getAllPosts();
    res.render("index.html", { posts })
 })
 
 app.post("/", (req: Request, res: Response) => {
   const { title, content } = req.body
-  Post.createPost(title, content)
+  PostRepository.createPost(title, content);
   res.redirect("/")
 })
 
